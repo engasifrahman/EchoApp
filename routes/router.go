@@ -10,7 +10,7 @@ import (
 func RegisterAllRoutes(e *echo.Echo, db *gorm.DB) {
 	api := e.Group("/api/v1")
 
-	e.GET("/heath_check", func(c echo.Context) error {
+	api.GET("/heath_check", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "Hello Go!")
 	})
 
@@ -18,5 +18,5 @@ func RegisterAllRoutes(e *echo.Echo, db *gorm.DB) {
 	propertyRepo := property.NewRepository(db) // Implemented somewhere
 	propertyUC := property.NewUseCase(propertyRepo)
 	propertyHandler := property.NewHandler(propertyUC)
-	property.RegisterRoutes(api.Group("/properties"), propertyHandler)
+	property.RegisterRoutes(api, propertyHandler)
 }
